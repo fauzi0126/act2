@@ -25,7 +25,26 @@ void changeDirectory() {
   _getcwd (currentDir, size of(currentDir));
   cout << "\n Current Directory" <<currentDir << '\n';
 
-  cout 
+  int choice;
+  cout << "1. Step by step backward \n";
+  cout << "2. Go to Root Directory \n";
+  cout << "3. Forward Directory \n";
+  cout << " Enter the Number ";
+  cin >> choice;
+
+  if (choice == 1) {
+    _chdir("..");
+}
+  else (choice == 2) {
+    _chdir("\\");
+}
+  else (choice == 3) {
+  << cout "Enter the Directory name: ";
+  string dirName;
+  cin >> dirName;
+    _chdir(dirName.c_str());
+}
+
 
 
     

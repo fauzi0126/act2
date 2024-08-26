@@ -1,93 +1,97 @@
-#include <iosstream> 
+#include <iostream>
 #include <string>
 #include <windows.h>
 #include <direct.h>
+
 using namespace std;
 
- void listFiles(const string&path) {
+void listFiles(const string& path) {
+    cout << "Listing files in Directory: " << path << endl;
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind = FindFirstFile((path + "\\*").c_str(), &findFileData);
 
-  cout << "Listing files in Directory" << path << \n;
-  WIN32_FIND_DATA findFileData;
-  HANDLE hFind=FindFirstFile(path+"/").c_str(), findFindData);
-    if(hFind==INVALID_HANDLE_VALUE){
-  cout<< "error could not open directory" << \n;
-  return;
+    if (hFind == INVALID_HANDLE_VALUE) {
+        cout << "Error: could not open directory" << endl;
+        return;
+    }
+
+    do {
+        cout << findFileData.cFileName << endl;
+    } while (FindNextFile(hFind, &findFileData) != 0);
+    
+    FindClose(hFind);
 }
 
-  do {
-  cout << findFileData.cFileName<< \n;
-} while (FileNextFile(hFind&findFileData)!=0) {
-    if (m_kdir(path.cstr())==0){
-  cout << "directory created successfully. " << \n;
-}
-    else { 
-  cout << "Failed to create directory. It may already Exist." \n;
- }
+void createDirectory(const string& path) {
+    if (_mkdir(path.c_str()) == 0) {
+        cout << "Directory created successfully." << endl;
+    } else {
+        cout << "Failed to create directory. It may already exist." << endl;
+    }
 }
 
-void changeDirectory (string& currPath.const string& newPath){
-  cout << "changing Directory to:' <<newPath.const << \n;
-    if(_chdir(newPath.c_str())==0){
-currPath=newPath
-  cout << "current working Directory" << currPath <<\n;
-}
-    else {
-  cout << "Error: could not change directory " << \n;
-
- }
+void changeDirectory(string& currPath, const string& newPath) {
+    cout << "Changing directory to: " << newPath << endl;
+    if (_chdir(newPath.c_str()) == 0) {
+        currPath = newPath;
+        cout << "Current working directory: " << currPath << endl;
+    } else {
+        cout << "Error: could not change directory" << endl;
+    }
 }
 
- void showMenu () {
-  cout << "\n Menu \n";
-  cout << "1. List Files" << \n;
-  cout << "2. Create Directory" << \n;
-  cout << "3. Change Directory" << \n;
-  cout << "4. Exit" << \n;
-  cout << "Enter your choice: ";
+void showMenu() {
+    cout << "\nMenu:" << endl;
+    cout << "1. List Files" << endl;
+    cout << "2. Create Directory" << endl;
+    cout << "3. Change Directory" << endl;
+    cout << "4. Exit" << endl;
+    cout << "Enter your choice: ";
 }
 
-int main () {
-char_cwd[1024];
- if(!_getcwd(cwd.sizeof(cwd))){
-  cout << "Error could not get the current working directory " << \n;
-return1;
+int main() {
+    char cwd[1024];
+    if (_getcwd(cwd, sizeof(cwd)) == NULL) {
+        cout << "Error: could not get the current working directory" << endl;
+        return 1;
+    }
 
-}
-string currPath= cwd;
-int choice;
+    string currPath = cwd;
+    int choice;
 
-do {
- showMenu ();
- cin >> choice;
-  switch (choice) {
+    do {
+        showMenu();
+        cin >> choice;
 
- case 1: {
-  listFiles(currPath);
-  break;
-}
- case 2: {
-  string newDir;
-  cout << "Enter the name of the new Directory:" \n;
-  break;
- case 3: {
-  string newPath;
-  cout << "Enter the path to change to: ";
-  cin >> newPath;
-  changeDirectory (currPath, newPath);
-  break;
-}
- case 4: {
-  cout << "exit. " << \n;
-  break;
-}
+        switch (choice) {
+            case 1: {
+                listFiles(currPath);
+                break;
+            }
+            case 2: {
+                string newDir;
+                cout << "Enter the name of the new directory: ";
+                cin >> newDir;
+                createDirectory(newDir);
+                break;
+            }
+            case 3: {
+                string newPath;
+                cout << "Enter the path to change to: ";
+                cin >> newPath;
+                changeDirectory(currPath, newPath);
+                break;
+            }
+            case 4: {
+                cout << "Exiting." << endl;
+                break;
+            }
+            default: {
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+            }
+        }
+    } while (choice != 4);
 
-default: {
-  cout << "invalid choice. Please try again. " << \n;
-  break;
-}
-}
-
-} while (choice !=4);
-
-return 0;
+    return 0;
 }

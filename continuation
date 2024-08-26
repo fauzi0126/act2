@@ -46,13 +46,48 @@ currPath=newPath
   cout << "Enter your choice: ";
 }
 
+int main () {
+char_cwd[1024];
+ if(!_getcwd(cwd.sizeof(cwd))){
+  cout << "Error could not get the current working directory " << \n;
+return1;
 
+}
+string currPath= cwd;
+int choice;
 
+do {
+ showMenu ();
+ cin >> choice;
+  switch (choice) {
 
+ case 1: {
+  listFiles(currPath);
+  break;
+}
+ case 2: {
+  string newDir;
+  cout << "Enter the name of the new Directory:" \n;
+  break;
+ case 3: {
+  string newPath;
+  cout << "Enter the path to change to: ";
+  cin >> newPath;
+  changeDirectory (currPath, newPath);
+  break;
+}
+ case 4: {
+  cout << "exit. " << \n;
+  break;
+}
 
+default: {
+  cout << "invalid choice. Please try again. " << \n;
+  break;
+}
+}
 
+} while (choice !=4);
 
-
-
-
-
+return 0;
+}

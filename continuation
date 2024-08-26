@@ -1,51 +1,58 @@
 #include <iosstream> 
-#include <csdio>
-#include <csdlib>
-#include <direct.h>
+#include <string>
 #include <windows.h>
+#include <direct.h>
+using namespace std;
 
-void createDirectory() {
-  string dirName;
-  cout << "\n Enter the Directory Name: ";
-  cin >> dirName;
+ void listFiles(const string&path) {
 
-  if (_mkdir(dirName.c_str()) == 0 ) {
-  cout << "\n Directory ' " << dirName << " ' Successfully created \n";
-}
-  else {
-  cout << "\n Failed to create Directory ' " << dirName << "' \n";
-}
-
-system("pause");
-
+  cout << "Listing files in Directory" << path << \n;
+  WIN32_FIND_DATA findFileData;
+  HANDLE hFind=FindFirstFile(path+"/").c_str(), findFindData);
+    if(hFind==INVALID_HANDLE_VALUE){
+  cout<< "error could not open directory" << \n;
+  return;
 }
 
-void changeDirectory() {
-  char currentDir[FILENAME_MAX];
-  _getcwd (currentDir, size of(currentDir));
-  cout << "\n Current Directory" <<currentDir << '\n';
-
-  int choice;
-  cout << "1. Step by step backward \n";
-  cout << "2. Go to Root Directory \n";
-  cout << "3. Forward Directory \n";
-  cout << " Enter the Number ";
-  cin >> choice;
-
-  if (choice == 1) {
-    _chdir("..");
+  do {
+  cout << findFileData.cFileName<< \n;
+} while (FileNextFile(hFind&findFileData)!=0) {
+    if (m_kdir(path.cstr())==0){
+  cout << "directory created successfully. " << \n;
 }
-  else (choice == 2) {
-    _chdir("\\");
-}
-  else (choice == 3) {
-  << cout "Enter the Directory name: ";
-  string dirName;
-  cin >> dirName;
-    _chdir(dirName.c_str());
+    else { 
+  cout << "Failed to create directory. It may already Exist." \n;
+ }
 }
 
+void changeDirectory (string& currPath.const string& newPath){
+  cout << "changing Directory to:' <<newPath.const << \n;
+    if(_chdir(newPath.c_str())==0){
+currPath=newPath
+  cout << "current working Directory" << currPath <<\n;
+}
+    else {
+  cout << "Error: could not change directory " << \n;
+
+ }
+}
+
+ void showMenu () {
+  cout << "\n Menu \n";
+  cout << "1. List Files" << \n;
+  cout << "2. Create Directory" << \n;
+  cout << "3. Change Directory" << \n;
+  cout << "4. Exit" << \n;
+  cout << "Enter your choice: ";
+}
 
 
-    
-    
+
+
+
+
+
+
+
+
+
